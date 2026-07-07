@@ -8,6 +8,7 @@ export interface Paper {
   source?: string;           // website/journal name (optional)
   ai_score?: number;         // 0-10 scale (optional)
   ai_summary_vi?: string;    // Vietnamese summary (optional)
+  abstract?: string;         // Original paper abstract (optional)
   published_at: string;      // ISO 8601 date string
 }
 

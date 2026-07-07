@@ -104,8 +104,8 @@ export default function PaperDetail({
           Abstract gốc
         </h2>
         <div className="p-4 bg-gray-50 dark:bg-slate-700 rounded text-gray-700 dark:text-gray-300 text-sm leading-relaxed max-h-96 overflow-y-auto">
-          {paper.url ? (
-            <p>{paper.url}</p>
+          {paper.abstract ? (
+            <p>{paper.abstract}</p>
           ) : (
             <p className="text-gray-500 dark:text-gray-400">Chưa có abstract</p>
           )}
