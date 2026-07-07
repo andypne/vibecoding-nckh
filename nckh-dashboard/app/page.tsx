@@ -1,17 +1,31 @@
 import { supabase } from "@/lib/supabase";
 import PapersGrid from "@/components/papers/PapersGrid";
+import { buildFilterQuery, type SearchParams } from "@/lib/filters";
+import FiltersBar from "@/components/papers/FiltersBar";
 
-async function getResearchData() {
-  const [{ data: papers }, { data: topics }] = await Promise.all([
-    supabase.from("papers").select("*").order("published_at", { ascending: false }).limit(50),
-    supabase.from("topics").select("*").limit(10),
-  ]);
+async function getResearchData(searchParams: Record<string, string | string[]>) {
+  const params: SearchParams = {
+    q: Array.isArray(searchParams.q) ? searchParams.q[0] : searchParams.q,
+    topics: Array.isArray(searchParams.topics) ? searchParams.topics[0] : searchParams.topics,
+    sources: Array.isArray(searchParams.sources) ? searchParams.sources[0] : searchParams.sources,
+    year: Array.isArray(searchParams.year) ? searchParams.year[0] : searchParams.year,
+    score: Array.isArray(searchParams.score) ? searchParams.score[0] : searchParams.score,
+  };
 
-  return { papers: papers || [], topics: topics || [] };
+  const query = buildFilterQuery(supabase, params);
+  const { data: papers } = await query;
+
+  const { data: topics } = await supabase.from("topics").select("*").limit(10);
+
+  return {
+    papers: papers || [],
+    topics: topics || [],
+    currentFilters: params,
+  };
 }
 
-export default async function Home() {
-  const { papers, topics } = await getResearchData();
+export default async function Home({ searchParams }: { searchParams: Record<string, string | string[]> }) {
+  const { papers, topics, currentFilters } = await getResearchData(searchParams);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-slate-900 dark:to-slate-800 p-8">
@@ -22,6 +36,15 @@ export default async function Home() {
         <p className="text-gray-600 dark:text-gray-300 mb-8">
           {papers.length} bài báo • {topics.length} chủ đề
         </p>
+
+        <FiltersBar
+          topics={topics.map((t) => t.name || String(t.id))}
+          searchQuery={currentFilters.q}
+          selectedTopics={currentFilters.topics ? [currentFilters.topics] : []}
+          selectedSources={currentFilters.sources ? currentFilters.sources.split(",") : []}
+          selectedYears={currentFilters.year ? currentFilters.year.split(",") : []}
+          selectedScore={currentFilters.score}
+        />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Topics */}
