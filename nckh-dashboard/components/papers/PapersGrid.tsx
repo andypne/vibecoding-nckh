@@ -1,4 +1,8 @@
+'use client';
+
+import { useState } from 'react';
 import PaperCard from "./PaperCard";
+import PaperDetail from "./PaperDetail";
 import { Paper } from "@/lib/utils/paper-helpers";
 
 interface PapersGridProps {
@@ -7,6 +11,8 @@ interface PapersGridProps {
 }
 
 export default function PapersGrid({ papers, isLoading }: PapersGridProps) {
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+
   // Loading state
   if (isLoading) {
     return (
@@ -35,7 +41,21 @@ export default function PapersGrid({ papers, isLoading }: PapersGridProps) {
   return (
     <div className="grid grid-cols-1 gap-4">
       {papers.map((paper) => (
-        <PaperCard key={paper.id} {...paper} />
+        <div key={paper.id}>
+          <PaperCard
+            {...paper}
+            isExpanded={expandedId === paper.id}
+            onExpand={() => setExpandedId(paper.id)}
+            onCollapse={() => setExpandedId(null)}
+          />
+          {expandedId === paper.id && (
+            <PaperDetail
+              paper={paper}
+              showFullLayout={false}
+              onClose={() => setExpandedId(null)}
+            />
+          )}
+        </div>
       ))}
     </div>
   );
