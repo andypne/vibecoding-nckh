@@ -1,0 +1,62 @@
+[
+  {
+    "id": "rss:arxiv:001",
+    "title": "Resistance Exercise and Muscle Protein Synthesis in Middle-Aged Men",
+    "url": "https://arxiv.org/abs/2401.00001",
+    "source": "rss",
+    "author": "Smith, J. & Johnson, M.",
+    "published_at": "2026-07-06T10:30:00Z",
+    "ai_score": 8.5,
+    "ai_reason": "Directly relevant to muscle hypertrophy in aging men",
+    "ai_summary": "Study demonstrates that high-intensity resistance training combined with adequate protein intake increases muscle protein synthesis in men aged 50-65, with implications for preventing age-related muscle loss.",
+    "ai_tags": ["strength training", "muscle hypertrophy", "aging", "protein synthesis"]
+  },
+  {
+    "id": "rss:arxiv:002",
+    "title": "Long-term Effects of Strength Training on Lean Mass Maintenance",
+    "url": "https://arxiv.org/abs/2401.00002",
+    "source": "rss",
+    "author": "Chen, L. et al.",
+    "published_at": "2026-07-05T15:45:00Z",
+    "ai_score": 7.8,
+    "ai_reason": "Addresses sarcopenia prevention in middle-aged population",
+    "ai_summary": "Longitudinal study showing sustained lean mass gains in men aged 45-70 who maintain consistent resistance exercise programs over 2 years.",
+    "ai_tags": ["sarcopenia", "resistance exercise", "middle-aged men", "lean mass"]
+  },
+  {
+    "id": "rss:arxiv:003",
+    "title": "Hormonal Response to Progressive Overload Training in Aging Athletes",
+    "url": "https://arxiv.org/abs/2401.00003",
+    "source": "rss",
+    "author": "Williams, R.",
+    "published_at": "2026-07-04T08:20:00Z",
+    "ai_score": 7.2,
+    "ai_reason": "Examines anabolic response in aging population",
+    "ai_summary": "Research on testosterone and IGF-1 responses to progressive strength training in men over 50, showing maintained anabolic signaling with proper training protocols.",
+    "ai_tags": ["testosterone", "hormonal response", "aging", "strength training"]
+  },
+  {
+    "id": "rss:arxiv:004",
+    "title": "Nutritional Strategies for Optimizing Muscle Hypertrophy in Older Adults",
+    "url": "https://arxiv.org/abs/2401.00004",
+    "source": "rss",
+    "author": "Thompson, D. & Brown, K.",
+    "published_at": "2026-07-03T12:15:00Z",
+    "ai_score": 6.9,
+    "ai_reason": "Practical nutrition guidance for age-appropriate muscle building",
+    "ai_summary": "Review of protein timing, amino acid distribution, and micronutrient requirements for maximizing muscle adaptation to resistance training in middle-aged and older men.",
+    "ai_tags": ["nutrition", "protein", "muscle hypertrophy", "aging"]
+  },
+  {
+    "id": "rss:arxiv:005",
+    "title": "Recovery Optimization for High-Frequency Resistance Training in Middle-Age",
+    "url": "https://arxiv.org/abs/2401.00005",
+    "source": "rss",
+    "author": "Garcia, M. et al.",
+    "published_at": "2026-07-02T09:00:00Z",
+    "ai_score": 6.7,
+    "ai_reason": "Addresses recovery strategies for middle-aged lifters",
+    "ai_summary": "Investigation of sleep, deload protocols, and active recovery methods for men aged 45-60 performing high-frequency strength training without overtraining.",
+    "ai_tags": ["recovery", "sleep", "overtraining", "resistance exercise"]
+  }
+]

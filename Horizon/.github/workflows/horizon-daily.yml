@@ -1,0 +1,50 @@
+name: Horizon Daily Crawl
+
+on:
+  schedule:
+    - cron: '0 9 * * *'  # 9:00 AM UTC every day
+  workflow_dispatch:    # Allow manual trigger
+
+jobs:
+  crawl-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt || pip install \
+            httpx feedparser anthropic openai google-genai pydantic \
+            python-dateutil rich tenacity python-dotenv beautifulsoup4 \
+            markdown ddgs requests mcp
+
+      - name: Run Horizon crawl
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          python -m src.main
+
+      - name: Push to Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          python push_to_supabase.py
+
+      - name: Commit and push results (optional)
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git commit -m "🤖 Horizon daily crawl: $(date -u +'%Y-%m-%d')" || true
+          git push
