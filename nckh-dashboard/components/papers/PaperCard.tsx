@@ -1,27 +1,48 @@
+'use client';
+
+import Link from "next/link";
 import { Paper, truncateText, getScoreBadgeColor, scoreBadgeClasses } from "@/lib/utils/paper-helpers";
 
-export default function PaperCard(paper: Paper) {
+interface PaperCardProps extends Paper {
+  isExpanded?: boolean;
+  onExpand?: () => void;
+  onCollapse?: () => void;
+}
+
+export default function PaperCard({
+  id,
+  title,
+  authors,
+  url,
+  source,
+  ai_score,
+  ai_summary_vi,
+  published_at,
+  isExpanded,
+  onExpand,
+  onCollapse,
+}: PaperCardProps) {
   return (
     <div className="p-5 bg-white dark:bg-slate-800 rounded-lg shadow hover:shadow-lg transition">
       {/* Title */}
       <a
-        href={paper.url}
+        href={url}
         target="_blank"
         rel="noopener noreferrer"
         className="text-lg font-bold text-blue-600 dark:text-blue-400 hover:underline block"
       >
-        {paper.title}
+        {title}
       </a>
 
       {/* Authors */}
       <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-        {paper.authors}
+        {authors}
       </p>
 
       {/* Summary - only render if it exists */}
-      {paper.ai_summary_vi && (
+      {ai_summary_vi && (
         <p className="mt-3 text-sm leading-relaxed text-gray-700 dark:text-gray-300">
-          {truncateText(paper.ai_summary_vi, 200)}
+          {truncateText(ai_summary_vi, 200)}
         </p>
       )}
 
@@ -30,30 +51,51 @@ export default function PaperCard(paper: Paper) {
         {/* Left side - badges */}
         <div className="flex row gap-2">
           {/* Source badge - only show if source exists */}
-          {paper.source && (
+          {source && (
             <span className="inline-block px-3 py-1 rounded text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
-              {paper.source}
+              {source}
             </span>
           )}
 
           {/* AI Score badge - always show */}
           <span
             className={`inline-block px-3 py-1 rounded text-xs font-medium ${
-              scoreBadgeClasses[getScoreBadgeColor(paper.ai_score)]
+              scoreBadgeClasses[getScoreBadgeColor(ai_score)]
             }`}
           >
-            ⭐ {paper.ai_score !== undefined ? paper.ai_score.toFixed(1) : "N/A"}
+            ⭐ {ai_score !== undefined ? ai_score.toFixed(1) : "N/A"}
           </span>
         </div>
 
         {/* Right side - published date */}
         <span className="text-xs text-gray-500 dark:text-gray-400">
-          {new Date(paper.published_at).toLocaleDateString("vi-VN", {
+          {new Date(published_at).toLocaleDateString("vi-VN", {
             day: "2-digit",
             month: "2-digit",
             year: "numeric",
           })}
         </span>
+      </div>
+
+      {/* Action buttons */}
+      <div className="mt-4 flex flex-wrap gap-3">
+        {/* Expand/Collapse button - only render if onExpand/onCollapse provided */}
+        {onExpand || onCollapse ? (
+          <button
+            onClick={isExpanded ? onCollapse : onExpand}
+            className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition"
+          >
+            {isExpanded ? "↑ Ẩn" : "Chi tiết"}
+          </button>
+        ) : null}
+
+        {/* Navigation link - always render */}
+        <Link
+          href={`/paper/${id}`}
+          className="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition"
+        >
+          → Xem trang
+        </Link>
       </div>
     </div>
   );
