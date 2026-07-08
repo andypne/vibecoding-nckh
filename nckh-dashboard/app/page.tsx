@@ -24,8 +24,9 @@ async function getResearchData(searchParams: Record<string, string | string[]>) 
   };
 }
 
-export default async function Home({ searchParams }: { searchParams: Record<string, string | string[]> }) {
-  const { papers, topics, currentFilters } = await getResearchData(searchParams);
+export default async function Home({ searchParams }: { searchParams: Promise<Record<string, string | string[]>> }) {
+  const resolvedParams = await searchParams;
+  const { papers, topics, currentFilters } = await getResearchData(resolvedParams);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-slate-900 dark:to-slate-800 p-8">
